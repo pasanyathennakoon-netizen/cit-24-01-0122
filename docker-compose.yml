@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  web:
+    build: ./web
+    container_name: website
+    ports:
+      - "8080:80"
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: dockerdb
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+
+volumes:
+  mysql-data:
