@@ -37,9 +37,9 @@ The following software is required before running the application:
 
 # Network Details
 
-Network Name:
+Network Name:  app-network 
 
-Purpose:
+Purpose: Allows communication between the Nginx container and MySQL container.
 
 The network allows communication between the Nginx container and the MySQL container.
 
@@ -47,9 +47,9 @@ The network allows communication between the Nginx container and the MySQL conta
 
 # Volume Details
 
-Volume Name:
+Volume Name:  mysql-data
 
-Purpose:
+Purpose:Stores MySQL database files permanently.
 
 This volume stores MySQL database files permanently.
 
@@ -61,13 +61,13 @@ Even if the MySQL container is stopped or restarted, the database information re
 
 ## Web Container
 
-Container Name:
+Container Name: website
 
-Image:
+Image: nginx:latest
 
-Port:
+Port: 8080:80
 
-Purpose:
+Purpose: Hosts the web application using Nginx.
 
 Hosts the website using Nginx.
 
@@ -75,15 +75,15 @@ Hosts the website using Nginx.
 
 ## Database Container
 
-Container Name:
+Container Name: mysql-db 
 
-Image:
+Image: mysql:8.0
 
-Port:
+Port: 3306
 
-Database:
+Database: mydb
 
-Purpose:
+Purpose: Stores application data.
 
 Stores application data.
 
@@ -100,7 +100,65 @@ Stores application data.
 
 # How to Prepare the Application
 
-Run:
+
+Run
 
 ```bash
 ./prepare-app.sh
+```
+
+This script creates the Docker network, creates the persistent volume and downloads or builds the required Docker images.
+## How to Start
+
+Run
+
+```bash
+./start-app.sh
+```
+
+This starts the Nginx and MySQL containers.
+
+Open your browser.
+
+http://localhost:8080
+## How to Stop
+
+Run
+
+```bash
+./stop-app.sh
+```
+
+This stops all running containers while preserving the database data stored in the Docker volume.
+## How to Remove
+
+Run
+
+```bash
+./remove-app.sh
+```
+
+This removes all containers, images, networks and volumes created for the application.
+## Example Workflow
+
+```bash
+./prepare-app.sh
+
+Preparing application...
+
+./start-app.sh
+
+Starting application...
+
+Application available at:
+
+http://localhost:8080
+
+./stop-app.sh
+
+Stopping application...
+
+./remove-app.sh
+
+Removing application...
+```
